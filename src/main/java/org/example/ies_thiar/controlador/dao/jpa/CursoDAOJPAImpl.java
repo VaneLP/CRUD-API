@@ -1,10 +1,9 @@
-package controlador.DAO.JPA;
+package org.example.ies_thiar.controlador.dao.jpa;
 
-import controlador.DAO.CursoDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import modelo.Curso;
-
+import org.example.ies_thiar.controlador.dao.CursoDAO;
+import org.example.ies_thiar.modelo.Curso;
 import java.util.List;
 
 public class CursoDAOJPAImpl implements CursoDAO {

@@ -1,17 +1,15 @@
-package controlador.DAO.JPA;
+package org.example.ies_thiar.controlador.dao.jpa;
 
-import controlador.DAO.AlumnoDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
-import modelo.Alumno;
+import org.example.ies_thiar.controlador.dao.AlumnoDAO;
+import org.example.ies_thiar.modelo.Alumno;
 import org.hibernate.Hibernate;
-
 import javax.swing.*;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AlumnoDAOJPAImpl implements AlumnoDAO {
     private EntityManager entityManager;

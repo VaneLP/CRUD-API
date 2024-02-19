@@ -1,4 +1,4 @@
-package controlador;
+package org.example.ies_thiar.controlador;
 
 import java.util.List;
 

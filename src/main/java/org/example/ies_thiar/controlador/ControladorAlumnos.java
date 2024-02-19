@@ -1,11 +1,11 @@
-package controlador;
+package org.example.ies_thiar.controlador;
 
-import controlador.DAO.AlumnoDAO;
-import controlador.DAO.JPA.AlumnoDAOJPAImpl;
-import modelo.Alumno;
-import modelo.Curso;
-import modelo.CursoInvalidoException;
-import modelo.Profesor;
+
+import org.example.ies_thiar.controlador.dao.AlumnoDAO;
+import org.example.ies_thiar.controlador.dao.jpa.AlumnoDAOJPAImpl;
+import org.example.ies_thiar.modelo.Alumno;
+import org.example.ies_thiar.modelo.Curso;
+import org.example.ies_thiar.modelo.CursoInvalidoException;
 
 import java.util.ArrayList;
 import java.util.List;

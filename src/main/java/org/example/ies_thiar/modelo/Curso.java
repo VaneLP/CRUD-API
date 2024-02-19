@@ -1,4 +1,4 @@
-package modelo;
+package org.example.ies_thiar.modelo;
 
 import jakarta.persistence.*;
 import java.util.List;
@@ -14,8 +14,9 @@ public class Curso {
 
     @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alumno> listaAlumnos;
-    @OneToOne(mappedBy = "curso", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Profesor listaProfesor;
+
+//    @OneToOne(mappedBy = "curso", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Profesor listaProfesor;
 
 
     //----------
