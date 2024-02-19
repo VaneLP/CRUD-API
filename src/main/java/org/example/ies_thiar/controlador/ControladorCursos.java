@@ -1,10 +1,8 @@
-package controlador;
+package org.example.ies_thiar.controlador;
 
-import controlador.DAO.CursoDAO;
-import controlador.DAO.JDBC.CursoDAOJDBCImpl;
-import controlador.DAO.JPA.CursoDAOJPAImpl;
-import modelo.Curso;
-
+import org.example.ies_thiar.controlador.dao.CursoDAO;
+import org.example.ies_thiar.controlador.dao.jpa.CursoDAOJPAImpl;
+import org.example.ies_thiar.modelo.Curso;
 import java.util.List;
 
 // Clase ListaCurso implementa la ILista para obtener sus metodos

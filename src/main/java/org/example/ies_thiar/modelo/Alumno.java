@@ -1,4 +1,4 @@
-package modelo;
+package org.example.ies_thiar.modelo;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 //clase Alumno que hereda de Persona
 //JPA
 @Entity
-public class Alumno extends Persona{
+public class Alumno extends Persona {
     //JPA
     //Many to one hace referencia al que muchos ALUMNO pueden tener un CURSO
     @ManyToOne(fetch = FetchType.EAGER)

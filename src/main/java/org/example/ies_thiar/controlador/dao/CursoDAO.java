@@ -1,6 +1,6 @@
-package controlador.DAO;
+package org.example.ies_thiar.controlador.dao;
 
-import modelo.Curso;
+import org.example.ies_thiar.modelo.Curso;
 import java.util.List;
 
 //clase para incluir logica de BDD

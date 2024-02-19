@@ -1,4 +1,4 @@
-package modelo;
+package org.example.ies_thiar.modelo;
 
 public class CursoInvalidoException extends Exception{
     public static final String ANSI_RED = "\u001B[31m";

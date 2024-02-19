@@ -1,4 +1,4 @@
-package controlador.DAO.JPA;
+package org.example.ies_thiar.controlador.dao.jpa;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

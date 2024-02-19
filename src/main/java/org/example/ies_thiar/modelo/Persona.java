@@ -1,4 +1,4 @@
-package modelo;
+package org.example.ies_thiar.modelo;
 
 import jakarta.persistence.*;
 
