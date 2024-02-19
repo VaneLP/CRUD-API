@@ -1,12 +1,15 @@
-package org.example.ies_thiar.controlador.dao;
+package controlador.DAO;
 
-import org.example.ies_thiar.Alumno;
+import modelo.Alumno;
+import modelo.Curso;
 
 import java.util.List;
 
+//clase para incluir logica de BDD
 public interface AlumnoDAO {
     void crearTablasAlum();
     void insert(Alumno alum);
+    void update(Alumno alum);
     void delete(String dni);
     Alumno readUno(String idAlum);
     List<Alumno> listaAlumDAO();
@@ -27,7 +30,7 @@ public interface AlumnoDAO {
     List<Alumno> empiezaPorDni(String dni);
     List<Alumno> terminaEnDni(String dni);
 
-    List<Alumno> notaMediaAlum(int mediia);
+    List<Alumno> notaMediaAlum(Double mediia);
     List<Alumno> profesorTutorAlum(String nombreTutor);
 
     List<Alumno> buscarCursoAlum(List<String> listaCur);

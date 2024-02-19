@@ -1,12 +1,13 @@
-package org.example.ies_thiar.controlador.dao;
+package controlador.DAO;
 
-import org.example.ies_thiar.Curso;
-
+import modelo.Curso;
 import java.util.List;
 
+//clase para incluir logica de BDD
 public interface CursoDAO {
     void crearTablasCur();
     void insert(Curso cur);
+    void update(Curso cur);
     void delete(Integer idCur);
     Curso readUno(Integer idCur);
     List<Curso> listaCurDAO();
