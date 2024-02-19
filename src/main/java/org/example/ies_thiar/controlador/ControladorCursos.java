@@ -1,11 +1,13 @@
 package org.example.ies_thiar.controlador;
 
+import com.hellokaton.blade.annotation.Path;
+import com.hellokaton.blade.annotation.route.GET;
 import org.example.ies_thiar.controlador.dao.CursoDAO;
 import org.example.ies_thiar.controlador.dao.jpa.CursoDAOJPAImpl;
 import org.example.ies_thiar.modelo.Curso;
 import java.util.List;
 
-// Clase ListaCurso implementa la ILista para obtener sus metodos
+@Path
 public class ControladorCursos implements ILista<Curso> {
     //private CursoDAO curDao = new CursoDAOJDBCImpl();
     private CursoDAO curJpa = new CursoDAOJPAImpl();
@@ -22,9 +24,6 @@ public class ControladorCursos implements ILista<Curso> {
 
     }
 
-    /**
-     * Metodo agregar de la interfaz ILista
-     */
     public void agregar(String nombre) {
         //BBDD
         curJpa.insert(new Curso(nombre));
@@ -64,6 +63,7 @@ public class ControladorCursos implements ILista<Curso> {
      *
      * @return nos duvuelve todos los cursos que tenemos en la lista
      */
+    @GET("/api/cursos")
     @Override
     public List<Curso> listar() {
         //BBDD

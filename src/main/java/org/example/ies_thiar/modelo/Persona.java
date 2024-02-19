@@ -101,13 +101,13 @@ public abstract class Persona {
      *
      * @return una cadena de texto formateada
      */
-    @Override
-    public String toString() {
-        return String.format("""
-                Nombre: %s
-                DNI: %s
-                TLF: %d
-                Edad: %d
-                """, nombre, DNI, tlf, edad);
-    }
+//    @Override
+//    public String toString() {
+//        return String.format("""
+//                Nombre: %s
+//                DNI: %s
+//                TLF: %d
+//                Edad: %d
+//                """, nombre, DNI, tlf, edad);
+//    }
 }

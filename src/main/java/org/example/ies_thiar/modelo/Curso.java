@@ -1,8 +1,13 @@
 package org.example.ies_thiar.modelo;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
+
 import java.util.List;
 
+@Data
+@Builder
 //JPA
 @Entity
 @Table(name = "Cursos")
@@ -52,6 +57,13 @@ public class Curso {
         this.id = codigo;
         this.nombre = nombre;
     }
+
+    public Curso(long id, List<Alumno> alumnos, String nombre) {
+        this.id = id;
+        this.listaAlumnos = alumnos;
+        this.nombre = nombre;
+    }
+
 
     // getters y setters
     // codigo

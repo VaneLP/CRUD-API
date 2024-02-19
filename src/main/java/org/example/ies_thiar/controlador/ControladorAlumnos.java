@@ -1,16 +1,16 @@
 package org.example.ies_thiar.controlador;
 
 
+import com.hellokaton.blade.annotation.Path;
 import org.example.ies_thiar.controlador.dao.AlumnoDAO;
 import org.example.ies_thiar.controlador.dao.jpa.AlumnoDAOJPAImpl;
 import org.example.ies_thiar.modelo.Alumno;
 import org.example.ies_thiar.modelo.Curso;
-import org.example.ies_thiar.modelo.CursoInvalidoException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// Clase ListaAlumnos implementa la ILista para obtener sus metodos
+@Path
 public class ControladorAlumnos implements ILista<Alumno> {
 	private List<Double> listNota = new ArrayList<Double>();
 	//JDBC
@@ -42,7 +42,7 @@ public class ControladorAlumnos implements ILista<Alumno> {
 
 	}
 
-	public void agregar(String nombre, String DNI, String tlf, String edad, Curso curso) throws CursoInvalidoException {
+	public void agregar(String nombre, String DNI, String tlf, String edad, Curso curso) {
 		//BDD
 		alumJpa.insert(new Alumno(nombre,DNI,tlf,edad,curso));
 

@@ -1,10 +1,14 @@
 package org.example.ies_thiar.modelo;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
-//clase Alumno que hereda de Persona
+@Data
+@Builder
 //JPA
 @Entity
 public class Alumno extends Persona {
@@ -20,35 +24,40 @@ public class Alumno extends Persona {
     private List<Double> listaNotas;
 
     //JPA
-    public Alumno() {}
+    public Alumno() {
+    }
 
     /*
      * constructor al cual le pasamos un super con los atributos de la clase Persona
      * porque hemos heredado de ella y tambien le pasamos los atributos propios de
      * la clase Alumno
      */
-    public Alumno(long id, String nombre, String DNI, String tlf, String edad, Curso curso) throws CursoInvalidoException {
-       super(id, nombre, DNI, tlf, edad);
+    public Alumno(long id, String nombre, String DNI, String tlf, String edad, Curso curso) {
+        super(id, nombre, DNI, tlf, edad);
 
-        if(curso!=null) {
-            //this.id = id;
-            this.curso = curso;
-            this.listaNotas = new ArrayList<Double>();
-        }
-        else
-            throw new CursoInvalidoException("ERROR: El curso puede que sea nulo");
+        //this.id = id;
+        this.curso = curso;
+        this.listaNotas = new ArrayList<Double>();
     }
 
-    public Alumno( String nombre, String DNI, String tlf, String edad, Curso curso) throws CursoInvalidoException {
+    public Alumno(long id, String nombre, String DNI, String tlf, String edad, Curso curso, List<Double> listaNotas) {
+        super(id, nombre, DNI, tlf, edad);
+
+        this.curso = curso;
+        this.listaNotas = listaNotas;
+    }
+
+    public Alumno(Curso curso, List<Double> listaNotas) {
+        this.curso = curso;
+        this.listaNotas = listaNotas;
+    }
+
+    public Alumno(String nombre, String DNI, String tlf, String edad, Curso curso) {
         super(nombre, DNI, tlf, edad);
 
-        if(curso!=null) {
-            //this.id = id;
-            this.curso = curso;
-            this.listaNotas = new ArrayList<Double>();
-        }
-        else
-            throw new CursoInvalidoException("ERROR: El curso puede que sea nulo");
+        //this.id = id;
+        this.curso = curso;
+        this.listaNotas = new ArrayList<Double>();
     }
 
     // getters y setters
@@ -56,8 +65,9 @@ public class Alumno extends Persona {
     public Curso getCurso() {
         return curso;
     }
+
     public void setCurso(Curso curso) {
-        if(curso!=null)
+        if (curso != null)
             this.curso = curso;
     }
 
@@ -65,8 +75,9 @@ public class Alumno extends Persona {
     public List<Double> getListaNotas() {
         return listaNotas;
     }
+
     public void setListaNotas(List<Double> listaNotas) {
-        if(listaNotas!=null)
+        if (listaNotas != null)
             this.listaNotas = listaNotas;
     }
 
@@ -76,6 +87,7 @@ public class Alumno extends Persona {
 //    }
 
     // ---- METODOS ----
+
     /**
      * Metodo para agregar una nota a el ArrayList listaNotas
      *
@@ -87,7 +99,7 @@ public class Alumno extends Persona {
 
     /**
      * Metodo para eliminar todas las nota del ArrayList listaNotas al cual no le
-     *
+     * <p>
      * pasamos nada como parametro porque queremos eliminarlas todas
      */
     public void eliminarNotas() {
