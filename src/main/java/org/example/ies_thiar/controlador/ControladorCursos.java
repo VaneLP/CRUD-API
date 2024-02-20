@@ -16,43 +16,43 @@ public class ControladorCursos{
     // ---- METODOS ----
 
     
-//    public void crearTablas() {
-//        curJpa.crearTablasCur();
-//    }
-//
-//    public void agregar(String nombre) {
-//        //BBDD
-//        curJpa.insert(new Curso(nombre));
-//    }
-//
-//
-//    public void agregarCsv(long id, String nombre) {
-//        //BBDD
-//        curJpa.insert(new Curso(id, nombre));
-//    }
-//
-//    /**
-//     * Metodo buscar de la interfaz ILista
-//     * @param id pasamos una cadena de texto, que haria referencia al codigo
-//     * @return nos duvuelve un curso si corresponde con el codigo
-//     */
-//
-//    public Curso buscar(String id) {
-//        //BBDD
-//        return curJpa.readUno(Integer.valueOf(id));
-//    }
-//
-//    /**
-//     * Metodo eliminar de la interfaz ILista
-//     *
-//     * @param codigo le pasamos una cadena de texto, que haria referencia al codigo
-//     * @return nos duvuelve TRUE si se ha eliminado el curso y FALSE sino
-//     */
-//
-//    public void eliminar(String codigo) {
-//        //BBDD
-//        curJpa.delete(Integer.valueOf(codigo));
-//    }
+    public void crearTablas() {
+        curJpa.crearTablasCur();
+    }
+
+    public void agregar(String nombre) {
+        //BBDD
+        curJpa.insert(new Curso(nombre));
+    }
+
+
+    public void agregarCsv(long id, String nombre) {
+        //BBDD
+        curJpa.insert(new Curso(id, nombre));
+    }
+
+    /**
+     * Metodo buscar de la interfaz ILista
+     * @param id pasamos una cadena de texto, que haria referencia al codigo
+     * @return nos duvuelve un curso si corresponde con el codigo
+     */
+
+    public Curso buscar(String id) {
+        //BBDD
+        return curJpa.readUno(Integer.valueOf(id));
+    }
+
+    /**
+     * Metodo eliminar de la interfaz ILista
+     *
+     * @param codigo le pasamos una cadena de texto, que haria referencia al codigo
+     * @return nos duvuelve TRUE si se ha eliminado el curso y FALSE sino
+     */
+
+    public void eliminar(String codigo) {
+        //BBDD
+        curJpa.delete(Integer.valueOf(codigo));
+    }
 
     /**
      * Metodo listar de la interfaz ILista
@@ -60,45 +60,43 @@ public class ControladorCursos{
      * @return nos duvuelve todos los cursos que tenemos en la lista
      */
     @GET("/api/cursos")
-    public void listar(Response response) {
+    public List<Curso> listar(Response response) {
         //BBDD
         System.out.println("listar curso");
-        List<Curso> lista = curJpa.listaCurDAO();
-        for (Curso curso : lista) {
-            System.out.println(curso);
-        }
-        response.json(lista);
-        //return curJpa.listaCurDAO();
+
+        response.json(curJpa.listaCurDAO());
+
+        return curJpa.listaCurDAO();
     }
-//JESUS !!!! ERROR 2024/02/20 16:04:32 ERROR [   worker@thread-1 ]       c.h.b.s.HttpServerHandler :  500          GET /api/cursos
-//    public List<Curso> ordenarALfabeticamente() {
-//        //BBDD
-//        return curJpa.ordenarCurAlfDAO();
-//    }
-//
-//    public List<Curso> coincidenciaExactaId(int idd){
-//        return curJpa.coincidenciaExactaId(idd);
-//    }
-//    public List<Curso> contienePalabraClaveId(int idd){
-//        return curJpa.contienePalabraClaveId(idd);
-//    }
-//    public List<Curso> empiezaPorId(int idd){
-//        return curJpa.empiezaPorId(idd);
-//    }
-//    public List<Curso> terminaEnId(int idd){
-//        return curJpa.terminaEnId(idd);
-//    }
-//    public List<Curso> coincidenciaExactaNombre(String name){
-//        return curJpa.coincidenciaExactaNombre(name);
-//    }
-//    public List<Curso> contienePalabraClaveNombre(String name){
-//        return curJpa.contienePalabraClaveNombre(name);
-//    }
-//    public List<Curso> empiezaPorNombre(String name){
-//        return curJpa.empiezaPorNombre(name);
-//    }
-//    public List<Curso> terminaEnNombre(String name){
-//        return curJpa.terminaEnNombre(name);
-//    }
+
+    public List<Curso> ordenarALfabeticamente() {
+        //BBDD
+        return curJpa.ordenarCurAlfDAO();
+    }
+
+    public List<Curso> coincidenciaExactaId(int idd){
+        return curJpa.coincidenciaExactaId(idd);
+    }
+    public List<Curso> contienePalabraClaveId(int idd){
+        return curJpa.contienePalabraClaveId(idd);
+    }
+    public List<Curso> empiezaPorId(int idd){
+        return curJpa.empiezaPorId(idd);
+    }
+    public List<Curso> terminaEnId(int idd){
+        return curJpa.terminaEnId(idd);
+    }
+    public List<Curso> coincidenciaExactaNombre(String name){
+        return curJpa.coincidenciaExactaNombre(name);
+    }
+    public List<Curso> contienePalabraClaveNombre(String name){
+        return curJpa.contienePalabraClaveNombre(name);
+    }
+    public List<Curso> empiezaPorNombre(String name){
+        return curJpa.empiezaPorNombre(name);
+    }
+    public List<Curso> terminaEnNombre(String name){
+        return curJpa.terminaEnNombre(name);
+    }
 
 }

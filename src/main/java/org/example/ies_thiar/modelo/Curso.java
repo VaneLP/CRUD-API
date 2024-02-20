@@ -16,13 +16,6 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
 
-//    @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Alumno> listaAlumnos;
-
-//    @OneToOne(mappedBy = "curso", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Profesor listaProfesor;
-
-
     //----------
     // atributos de la clase Curso
 //    private static int contador = 1;
@@ -57,13 +50,6 @@ public class Curso {
         this.nombre = nombre;
     }
 
-//    public Curso(long id, List<Alumno> alumnos, String nombre) {
-//        this.id = id;
-//        this.listaAlumnos = alumnos;
-//        this.nombre = nombre;
-//    }
-
-
     // getters y setters
     // codigo
     public long getId() {
@@ -77,11 +63,6 @@ public class Curso {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    //lista alumnols
-//    public List<Alumno> getListaAlumnos() {
-//        return listaAlumnos;
-//    }
 
     /**
      * Metodo toString
