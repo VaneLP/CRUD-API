@@ -16,8 +16,8 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
 
-    @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Alumno> listaAlumnos;
+//    @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Alumno> listaAlumnos;
 
 //    @OneToOne(mappedBy = "curso", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    private Profesor listaProfesor;
@@ -57,39 +57,39 @@ public class Curso {
         this.nombre = nombre;
     }
 
-    public Curso(long id, List<Alumno> alumnos, String nombre) {
-        this.id = id;
-        this.listaAlumnos = alumnos;
-        this.nombre = nombre;
-    }
+//    public Curso(long id, List<Alumno> alumnos, String nombre) {
+//        this.id = id;
+//        this.listaAlumnos = alumnos;
+//        this.nombre = nombre;
+//    }
 
 
     // getters y setters
     // codigo
-//    public long getId() {
-//        return id;
-//    }
-//
-//    // nombre
-//    public String getNombre() {
-//        return nombre;
-//    }
-//    public void setNombre(String nombre) {
-//        this.nombre = nombre;
-//    }
-//
-//    //lista alumnols
+    public long getId() {
+        return id;
+    }
+
+    // nombre
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    //lista alumnols
 //    public List<Alumno> getListaAlumnos() {
 //        return listaAlumnos;
 //    }
-//
-//    /**
-//     * Metodo toString
-//     * @return una cadena de texto formateada
-//     */
-//    @Override
-//    public String toString() {
-//        return nombre;
-//    }
+
+    /**
+     * Metodo toString
+     * @return una cadena de texto formateada
+     */
+    @Override
+    public String toString() {
+        return nombre;
+    }
 
 }

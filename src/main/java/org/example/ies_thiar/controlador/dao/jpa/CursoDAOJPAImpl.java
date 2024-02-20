@@ -113,9 +113,9 @@ public class CursoDAOJPAImpl implements CursoDAO {
                                     "FROM Curso c", Curso.class);
 
 
-            for (Curso c : query.getResultList()) {
-                Hibernate.initialize(c.getListaAlumnos());
-            }
+//            for (Curso c : query.getResultList()) {
+//                Hibernate.initialize(c.getListaAlumnos());
+//            }
 
             return query.getResultList();
         } catch (Exception e) {

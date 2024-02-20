@@ -90,7 +90,7 @@ public class AlumnoDAOJPAImpl implements AlumnoDAO {
             query.setParameter("DNI", dni);
 
             for (Alumno a : query.getResultList()) {
-                if(a.getDNI().equalsIgnoreCase(dni))
+                //if(a.getDNI().equalsIgnoreCase(dni))
                     entityManager.remove(a);
             }
 
@@ -187,10 +187,10 @@ public class AlumnoDAOJPAImpl implements AlumnoDAO {
             query.setParameter("DNI", dni);
 
             for (Alumno a : query.getResultList()) {
-                if(a.getDNI().equalsIgnoreCase(dni)) {
+                //if(a.getDNI().equalsIgnoreCase(dni)) {
                     a.agregarNota(nota);
                     entityManager.merge(a);
-                }
+                //}
             }
 
             entityManager.getTransaction().commit();
@@ -217,10 +217,10 @@ public class AlumnoDAOJPAImpl implements AlumnoDAO {
                                     "LEFT JOIN FETCH a.curso ", Alumno.class);
 
             for (Alumno alum : query.getResultList()) {
-                if(alum.getDNI().equalsIgnoreCase(a.getDNI())) {
+                //if(alum.getDNI().equalsIgnoreCase(a.getDNI())) {
                     a.agregarNota(nota);
                     entityManager.merge(a);
-                }
+                //}
             }
 
             System.out.println("Inserción de nota exitosa");
@@ -538,32 +538,32 @@ public class AlumnoDAOJPAImpl implements AlumnoDAO {
         }
     }
 
-    @Override
-    public List<Alumno> profesorTutorAlum(String nombreTutor) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso c " +
-                                    "LEFT JOIN c.listaProfesor p " +
-                                    "WHERE p.nombre = :nombreTutor", Alumno.class);
-
-            query.setParameter("nombreTutor", nombreTutor);
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
+//    @Override
+//    public List<Alumno> profesorTutorAlum(String nombreTutor) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso c " +
+//                                    "LEFT JOIN c.listaProfesor p " +
+//                                    "WHERE p.nombre = :nombreTutor", Alumno.class);
+//
+//            query.setParameter("nombreTutor", nombreTutor);
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
 
     @Override
     public List<Alumno> buscarCursoAlum(List<String> listaCur) {

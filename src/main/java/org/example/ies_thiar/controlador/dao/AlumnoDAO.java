@@ -29,7 +29,7 @@ public interface AlumnoDAO {
     List<Alumno> terminaEnDni(String dni);
 
     List<Alumno> notaMediaAlum(Double mediia);
-    List<Alumno> profesorTutorAlum(String nombreTutor);
+    //List<Alumno> profesorTutorAlum(String nombreTutor);
 
     List<Alumno> buscarCursoAlum(List<String> listaCur);
 }

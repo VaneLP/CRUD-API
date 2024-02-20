@@ -131,9 +131,9 @@ public class ControladorAlumnos  {
 	public List<Alumno> notaMediaAlum(Double mediia){
 		return alumJpa.notaMediaAlum(mediia);
 	}
-	public List<Alumno> profesorTutorAlum(String nombreTutor){
-		return alumJpa.profesorTutorAlum(nombreTutor);
-	}
+//	public List<Alumno> profesorTutorAlum(String nombreTutor){
+//		return alumJpa.profesorTutorAlum(nombreTutor);
+//	}
 
 	public List<Alumno> buscarCursoAlum(List<String> listaCur){
 		return alumJpa.buscarCursoAlum(listaCur);

@@ -64,6 +64,9 @@ public class ControladorCursos{
         //BBDD
         System.out.println("listar curso");
         List<Curso> lista = curJpa.listaCurDAO();
+        for (Curso curso : lista) {
+            System.out.println(curso);
+        }
         response.json(lista);
         //return curJpa.listaCurDAO();
     }
