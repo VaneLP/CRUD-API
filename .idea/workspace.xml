@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="45f7cc47-062e-48be-aa45-df1f334101d3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/ControladorCursos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/ControladorCursos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/jpa/CursoDAOJPAImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/jpa/CursoDAOJPAImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/modelo/Curso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/modelo/Curso.java" afterDir="false" />
-    </list>
+    <list default="true" id="45f7cc47-062e-48be-aa45-df1f334101d3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,7 +94,7 @@
       <updated>1707148113649</updated>
       <workItem from="1708357696781" duration="5243000" />
       <workItem from="1708439451415" duration="1647000" />
-      <workItem from="1708441385119" duration="4644000" />
+      <workItem from="1708441385119" duration="4727000" />
     </task>
     <servers />
   </component>
