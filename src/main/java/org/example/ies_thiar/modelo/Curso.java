@@ -3,7 +3,6 @@ package org.example.ies_thiar.modelo;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
-
 import java.util.List;
 
 @Data
@@ -67,25 +66,30 @@ public class Curso {
 
     // getters y setters
     // codigo
-    public long getId() {
-        return id;
-    }
-
-    // nombre
-    public String getNombre() {
-        return nombre;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
-     * Metodo toString
-     * @return una cadena de texto formateada
-     */
-    @Override
-    public String toString() {
-        return nombre;
-    }
+//    public long getId() {
+//        return id;
+//    }
+//
+//    // nombre
+//    public String getNombre() {
+//        return nombre;
+//    }
+//    public void setNombre(String nombre) {
+//        this.nombre = nombre;
+//    }
+//
+//    //lista alumnols
+//    public List<Alumno> getListaAlumnos() {
+//        return listaAlumnos;
+//    }
+//
+//    /**
+//     * Metodo toString
+//     * @return una cadena de texto formateada
+//     */
+//    @Override
+//    public String toString() {
+//        return nombre;
+//    }
 
 }

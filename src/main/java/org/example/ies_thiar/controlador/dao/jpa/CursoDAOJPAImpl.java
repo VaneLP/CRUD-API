@@ -3,7 +3,10 @@ package org.example.ies_thiar.controlador.dao.jpa;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.example.ies_thiar.controlador.dao.CursoDAO;
+import org.example.ies_thiar.modelo.Alumno;
 import org.example.ies_thiar.modelo.Curso;
+import org.hibernate.Hibernate;
+
 import java.util.List;
 
 public class CursoDAOJPAImpl implements CursoDAO {
@@ -108,6 +111,11 @@ public class CursoDAOJPAImpl implements CursoDAO {
                     entityManager.createQuery(
                             "SELECT c " +
                                     "FROM Curso c", Curso.class);
+
+
+            for (Curso c : query.getResultList()) {
+                Hibernate.initialize(c.getListaAlumnos());
+            }
 
             return query.getResultList();
         } catch (Exception e) {

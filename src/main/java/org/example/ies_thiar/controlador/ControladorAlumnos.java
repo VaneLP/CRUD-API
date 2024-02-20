@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Path
-public class ControladorAlumnos implements ILista<Alumno> {
+public class ControladorAlumnos  {
 	private List<Double> listNota = new ArrayList<Double>();
 	//JDBC
 	//private AlumnoDAO alumDao= new AlumnoDAOJDBCImpl();
@@ -25,21 +25,9 @@ public class ControladorAlumnos implements ILista<Alumno> {
 
 	// ---- METODOS ----
 
-	@Override
+	
 	public void crearTablas() {
 		alumJpa.crearTablasAlum();
-	}
-
-	/**
-	 * Metodo agregar de la interfaz ILista
-	 *
-	 * @param a le pasamos un alumno
-	 *
-	 * @return nos duvuelve si se ha añadido o no
-	 */
-	@Override
-	public void agregar(Alumno a) {
-
 	}
 
 	public void agregar(String nombre, String DNI, String tlf, String edad, Curso curso) {
@@ -52,7 +40,7 @@ public class ControladorAlumnos implements ILista<Alumno> {
 	 * @param dni, le pasamos una cadena de texto, que haria referencia al DNI
 	 * @return nos duvuelve un alumno si corresponde con el DNI
 	 */
-	@Override
+	
 	public Alumno buscar(String dni) {
 		//BBDD
 		return alumJpa.readUno(dni);
@@ -63,7 +51,7 @@ public class ControladorAlumnos implements ILista<Alumno> {
 	 * @param dni, le pasamos una cadena de texto, que haria referencia al DNI
 	 * @return nos duvuelve TRUE si se ha eliminado el alumno y FALSE sino
 	 */
-	@Override
+	
 	public void eliminar(String dni) {
 		//BBDD
 		alumJpa.delete(dni);
@@ -73,7 +61,7 @@ public class ControladorAlumnos implements ILista<Alumno> {
 	 * Metodo listar de la interfaz ILista
 	 * @return nos duvuelve todos los alumnos que tenemos en la lista
 	 */
-	@Override
+	
 	public List<Alumno> listar() {
 		//BBDD
 		return alumJpa.listaAlumDAO();
