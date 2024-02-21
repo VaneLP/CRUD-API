@@ -59,7 +59,6 @@ public class ControladorCursos{
      *
      * @return nos duvuelve todos los cursos que tenemos en la lista
      */
-    @GET("/api/cursos")
     public List<Curso> listar(Response response) {
         //BBDD
         System.out.println("listar curso");

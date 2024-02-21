@@ -1,7 +1,13 @@
 package org.example.ies_thiar.controlador;
 
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hellokaton.blade.annotation.Path;
+import com.hellokaton.blade.annotation.request.Body;
+import com.hellokaton.blade.annotation.route.GET;
+import com.hellokaton.blade.annotation.route.POST;
+import com.hellokaton.blade.mvc.http.Response;
 import org.example.ies_thiar.controlador.dao.AlumnoDAO;
 import org.example.ies_thiar.controlador.dao.jpa.AlumnoDAOJPAImpl;
 import org.example.ies_thiar.modelo.Alumno;
@@ -24,15 +30,20 @@ public class ControladorAlumnos  {
 
 
 	// ---- METODOS ----
-
-	
 	public void crearTablas() {
 		alumJpa.crearTablasAlum();
 	}
 
-	public void agregar(String nombre, String DNI, String tlf, String edad, Curso curso) {
-		//BDD
-		alumJpa.insert(new Alumno(nombre,DNI,tlf,edad,curso));
+	@POST("/api/agregarAlumno")
+	public void agregar(@Body String body, Response response) {
+		try{
+			Alumno a = new Gson().fromJson(body, new TypeToken<Alumno>() {}.getType());
+			alumJpa.insert(a);
+			response.status(200);
+		}catch (Exception e){
+			e.printStackTrace();
+			response.status(400);
+		}
 
 	}
 	/**
@@ -61,9 +72,10 @@ public class ControladorAlumnos  {
 	 * Metodo listar de la interfaz ILista
 	 * @return nos duvuelve todos los alumnos que tenemos en la lista
 	 */
-	
-	public List<Alumno> listar() {
+	@GET("/api/alumnos")
+	public List<Alumno> listar(Response response) {
 		//BBDD
+		response.json(alumJpa.listaAlumDAO());
 		return alumJpa.listaAlumDAO();
 	}
 
