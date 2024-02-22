@@ -9,7 +9,8 @@ public interface AlumnoDAO {
     void insert(Alumno alum);
     void update(Alumno alum);
     void delete(String dni);
-    Alumno readUno(String idAlum);
+    Alumno readUno(String dniAlum);
+    Alumno readUno(long idAlum);
     List<Alumno> listaAlumDAO();
     List<Alumno> ordenarAlumAlfDAO();
     void insertNota(String dni, double nota);

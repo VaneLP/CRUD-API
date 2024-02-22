@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hellokaton.blade.annotation.Path;
 import com.hellokaton.blade.annotation.request.Body;
+import com.hellokaton.blade.annotation.request.PathParam;
 import com.hellokaton.blade.annotation.route.GET;
 import com.hellokaton.blade.annotation.route.POST;
 import com.hellokaton.blade.mvc.http.Response;
@@ -15,6 +16,7 @@ import org.example.ies_thiar.modelo.Curso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Path
 public class ControladorAlumnos  {
@@ -46,32 +48,26 @@ public class ControladorAlumnos  {
 		}
 
 	}
-	/**
-	 * Metodo buscar de la interfaz ILista
-	 * @param dni, le pasamos una cadena de texto, que haria referencia al DNI
-	 * @return nos duvuelve un alumno si corresponde con el DNI
-	 */
-	
-	public Alumno buscar(String dni) {
-		//BBDD
-		return alumJpa.readUno(dni);
-	}
+	@POST("/api/alumno/:id")
+	public Alumno buscar(Response response, @PathParam long id) {
+		Optional<Alumno> a = Optional.ofNullable(alumJpa.readUno(id));
 
-	/**
-	 * Metodo eliminar de la interfaz ILista
-	 * @param dni, le pasamos una cadena de texto, que haria referencia al DNI
-	 * @return nos duvuelve TRUE si se ha eliminado el alumno y FALSE sino
-	 */
+		if(a.isPresent())
+			response.json(a.get());
+		else
+			response.json("Alumno no encontrado");
+
+        return a.get();
+    }
+
+
 	
 	public void eliminar(String dni) {
 		//BBDD
 		alumJpa.delete(dni);
 	}
 
-	/**
-	 * Metodo listar de la interfaz ILista
-	 * @return nos duvuelve todos los alumnos que tenemos en la lista
-	 */
+
 	@GET("/api/alumnos")
 	public List<Alumno> listar(Response response) {
 		//BBDD
@@ -79,39 +75,18 @@ public class ControladorAlumnos  {
 		return alumJpa.listaAlumDAO();
 	}
 
-	/**
-	 * Metodo ordenarAlfabeticamente
-	 * Nos devuelve la lista ordenada alfabeticamente
-	 */
 	public List<Alumno> ordenarAlfabeticamente() {
 		return alumJpa.ordenarAlumAlfDAO();
 	}
-
-	/**
-	 * Metodo agregarNotaAlumno
-	 */
 	public void agregarNotaAlumno(Alumno a, double nota) {
 		alumJpa.insertNota(a,nota);
 	}
 	public void agregarNotaAlumno(String dni, double nota) {
 		alumJpa.insertNota(dni,nota);
 	}
-
-
-	/**
-	 * Metodo listarAprobados
-	 *
-	 * @return devuelve una nueva lista con los alumnos aprobados
-	 */
 	public List<Alumno> listarAprobados() {
 		return alumJpa.listaAlumAproDAO();
 	}
-
-	/**
-	 * Metodo listarSuspensos
-	 * 
-	 * @return devuelve una nueva lista con los alumnos suspensos
-	 */
 	public List<Alumno> listarSuspensos() {
 		return alumJpa.listaAlumSusDAO();
 	}

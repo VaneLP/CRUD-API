@@ -122,6 +122,19 @@ public class AlumnoDAOJPAImpl implements AlumnoDAO {
         }
     }
 
+    @Override
+    public Alumno readUno(long idAlum) {
+        entityManager = ControladorJPA.getEntityManager();
+
+        try {
+            return entityManager.find(Alumno.class, idAlum);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            entityManager.close();
+        }
+    }
+
     //HQL
     @Override
     public List<Alumno> listaAlumDAO() {
