@@ -59,8 +59,6 @@ public class ControladorAlumnos  {
 
         return a.get();
     }
-
-
 	
 	public void eliminar(String dni) {
 		//BBDD
