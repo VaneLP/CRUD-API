@@ -14,10 +14,10 @@ import java.util.List;
 public class AlumnoDAOJPAImpl implements AlumnoDAO {
     private EntityManager entityManager;
 
-    @Override
-    public void crearTablasAlum() {
-        // No es necesario en JPA, ya que las tablas son gestionadas automaticamente
-    }
+//    @Override
+//    public void crearTablasAlum() {
+//        // No es necesario en JPA, ya que las tablas son gestionadas automaticamente
+//    }
 
     @Override
     public void insert(Alumno alumno) {
@@ -108,6 +108,40 @@ public class AlumnoDAOJPAImpl implements AlumnoDAO {
     }
 
     @Override
+    public void delete(Long id) {
+        entityManager = ControladorJPA.getEntityManager();
+
+        try {
+            entityManager.getTransaction().begin();
+
+            TypedQuery<Alumno> query =
+                    entityManager.createQuery(
+                            "SELECT a " +
+                                    "FROM Alumno a " +
+                                    "LEFT JOIN FETCH a.curso " +
+                                    "WHERE a.id = :id", Alumno.class);
+
+            query.setParameter("id", id);
+
+            for (Alumno a : query.getResultList()) {
+                //if(a.getDNI().equalsIgnoreCase(dni))
+                entityManager.remove(a);
+            }
+
+            entityManager.getTransaction().commit();
+
+            System.out.println("Alumno borrado");
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            throw new RuntimeException("Error al eliminar Alumno", e);
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
     public Alumno readUno(String dniAlum) {
         entityManager = ControladorJPA.getEntityManager();
 
@@ -127,7 +161,11 @@ public class AlumnoDAOJPAImpl implements AlumnoDAO {
         entityManager = ControladorJPA.getEntityManager();
 
         try {
-            return entityManager.find(Alumno.class, idAlum);
+            Alumno a = entityManager.find(Alumno.class, idAlum);
+
+            Hibernate.initialize(a.getListaNotas());
+            
+            return a;
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -159,400 +197,8 @@ public class AlumnoDAOJPAImpl implements AlumnoDAO {
         }
     }
 
-    @Override
-    public List<Alumno> ordenarAlumAlfDAO() {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso " +
-                                    "ORDER BY a.nombre ASC", Alumno.class);
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public void insertNota(String dni, double nota) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            entityManager.getTransaction().begin();
-
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso " +
-                                    "WHERE a.DNI = :DNI", Alumno.class);
-
-            query.setParameter("DNI", dni);
-
-            for (Alumno a : query.getResultList()) {
-                //if(a.getDNI().equalsIgnoreCase(dni)) {
-                    a.agregarNota(nota);
-                    entityManager.merge(a);
-                //}
-            }
-
-            entityManager.getTransaction().commit();
-
-            System.out.println("Insercion notas ");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public void insertNota(Alumno a, double nota) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            entityManager.getTransaction().begin();
-
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso ", Alumno.class);
-
-            for (Alumno alum : query.getResultList()) {
-                //if(alum.getDNI().equalsIgnoreCase(a.getDNI())) {
-                    a.agregarNota(nota);
-                    entityManager.merge(a);
-                //}
-            }
-
-            System.out.println("Inserción de nota exitosa");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> listaAlumAproDAO() {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query = entityManager.createQuery(
-                    "SELECT a " +
-                            "FROM Alumno a " +
-                            "LEFT JOIN FETCH a.curso " +
-                            "WHERE a IN " +
-                                        "(SELECT a " +
-                                        "FROM Alumno a " +
-                                        "JOIN a.listaNotas nota " +
-                                        "GROUP BY a " +
-                                        "HAVING AVG(nota) >= 5)", Alumno.class);
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> listaAlumSusDAO() {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query = entityManager.createQuery(
-                    "SELECT a " +
-                            "FROM Alumno a " +
-                            "LEFT JOIN FETCH a.curso " +
-                            "WHERE a IN " +
-                                        "(SELECT a " +
-                                        "FROM Alumno a " +
-                                        "JOIN a.listaNotas nota " +
-                                        "GROUP BY a " +
-                                        "HAVING AVG(nota) < 5)", Alumno.class);
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> coincidenciaExactaNombre(String name) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso " +
-                                    "WHERE a.nombre = :nombre", Alumno.class);
-
-            query.setParameter("nombre", name);
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> contienePalabraClaveNombre(String name) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso " +
-                                    "WHERE a.nombre " +
-                                    "LIKE :nombre", Alumno.class);
-
-            query.setParameter("nombre", "%" + name + "%");
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> empiezaPorNombre(String name) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso " +
-                                    "WHERE a.nombre " +
-                                    "LIKE :nombre", Alumno.class);
-
-            query.setParameter("nombre", name + "%");
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> terminaEnNombre(String name) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso " +
-                                    "WHERE a.nombre " +
-                                    "LIKE :nombre", Alumno.class);
-
-            query.setParameter("nombre", "%" + name);
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> coincidenciaExactaDni(String dnii) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso " +
-                                    "WHERE a.DNI = :DNI", Alumno.class);
-
-            query.setParameter("DNI", dnii);
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> contienePalabraClaveDni(String dnii) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso " +
-                                    "WHERE a.DNI " +
-                                    "LIKE :DNI", Alumno.class);
-
-            query.setParameter("DNI", "%" + dnii + "%");
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> empiezaPorDni(String dnii) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso " +
-                                    "WHERE a.DNI " +
-                                    "LIKE :DNI", Alumno.class);
-
-            query.setParameter("DNI", dnii + "%");
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> terminaEnDni(String dnii) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso " +
-                                    "WHERE a.DNI " +
-                                    "LIKE :DNI", Alumno.class);
-
-            query.setParameter("DNI", "%" + dnii);
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Alumno> notaMediaAlum(Double mediia) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso", Alumno.class);
-
-            List<Alumno> alumnos = query.getResultList();
-
-            List<Alumno> result = new ArrayList<>();
-
-            for (Alumno a : alumnos) {
-                double sumaNotas =
-                        a.getListaNotas()
-                                .stream()
-                                .mapToDouble(Double::doubleValue)
-                                .sum();
-
-                double media = sumaNotas / a.getListaNotas().size();
-
-                if (media == mediia) {
-                    result.add(a);
-                }
-            }
-
-            return result;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
-
 //    @Override
-//    public List<Alumno> profesorTutorAlum(String nombreTutor) {
+//    public List<Alumno> ordenarAlumAlfDAO() {
 //        entityManager = ControladorJPA.getEntityManager();
 //
 //        try {
@@ -560,11 +206,8 @@ public class AlumnoDAOJPAImpl implements AlumnoDAO {
 //                    entityManager.createQuery(
 //                            "SELECT a " +
 //                                    "FROM Alumno a " +
-//                                    "LEFT JOIN FETCH a.curso c " +
-//                                    "LEFT JOIN c.listaProfesor p " +
-//                                    "WHERE p.nombre = :nombreTutor", Alumno.class);
-//
-//            query.setParameter("nombreTutor", nombreTutor);
+//                                    "LEFT JOIN FETCH a.curso " +
+//                                    "ORDER BY a.nombre ASC", Alumno.class);
 //
 //            for (Alumno alumno : query.getResultList()) {
 //                Hibernate.initialize(alumno.getListaNotas());
@@ -577,31 +220,426 @@ public class AlumnoDAOJPAImpl implements AlumnoDAO {
 //            entityManager.close();
 //        }
 //    }
-
-    @Override
-    public List<Alumno> buscarCursoAlum(List<String> listaCur) {
-        entityManager = ControladorJPA.getEntityManager();
-
-        try {
-            TypedQuery<Alumno> query =
-                    entityManager.createQuery(
-                            "SELECT a " +
-                                    "FROM Alumno a " +
-                                    "LEFT JOIN FETCH a.curso c " +
-                                    "WHERE c.nombre IN :listaCur", Alumno.class);
-
-            query.setParameter("listaCur", listaCur);
-
-            for (Alumno alumno : query.getResultList()) {
-                Hibernate.initialize(alumno.getListaNotas());
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            entityManager.close();
-        }
-    }
+//
+//    @Override
+//    public void insertNota(String dni, double nota) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            entityManager.getTransaction().begin();
+//
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso " +
+//                                    "WHERE a.DNI = :DNI", Alumno.class);
+//
+//            query.setParameter("DNI", dni);
+//
+//            for (Alumno a : query.getResultList()) {
+//                //if(a.getDNI().equalsIgnoreCase(dni)) {
+//                    a.agregarNota(nota);
+//                    entityManager.merge(a);
+//                //}
+//            }
+//
+//            entityManager.getTransaction().commit();
+//
+//            System.out.println("Insercion notas ");
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public void insertNota(Alumno a, double nota) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            entityManager.getTransaction().begin();
+//
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso ", Alumno.class);
+//
+//            for (Alumno alum : query.getResultList()) {
+//                //if(alum.getDNI().equalsIgnoreCase(a.getDNI())) {
+//                    a.agregarNota(nota);
+//                    entityManager.merge(a);
+//                //}
+//            }
+//
+//            System.out.println("Inserción de nota exitosa");
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> listaAlumAproDAO() {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query = entityManager.createQuery(
+//                    "SELECT a " +
+//                            "FROM Alumno a " +
+//                            "LEFT JOIN FETCH a.curso " +
+//                            "WHERE a IN " +
+//                                        "(SELECT a " +
+//                                        "FROM Alumno a " +
+//                                        "JOIN a.listaNotas nota " +
+//                                        "GROUP BY a " +
+//                                        "HAVING AVG(nota) >= 5)", Alumno.class);
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> listaAlumSusDAO() {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query = entityManager.createQuery(
+//                    "SELECT a " +
+//                            "FROM Alumno a " +
+//                            "LEFT JOIN FETCH a.curso " +
+//                            "WHERE a IN " +
+//                                        "(SELECT a " +
+//                                        "FROM Alumno a " +
+//                                        "JOIN a.listaNotas nota " +
+//                                        "GROUP BY a " +
+//                                        "HAVING AVG(nota) < 5)", Alumno.class);
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> coincidenciaExactaNombre(String name) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso " +
+//                                    "WHERE a.nombre = :nombre", Alumno.class);
+//
+//            query.setParameter("nombre", name);
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> contienePalabraClaveNombre(String name) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso " +
+//                                    "WHERE a.nombre " +
+//                                    "LIKE :nombre", Alumno.class);
+//
+//            query.setParameter("nombre", "%" + name + "%");
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> empiezaPorNombre(String name) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso " +
+//                                    "WHERE a.nombre " +
+//                                    "LIKE :nombre", Alumno.class);
+//
+//            query.setParameter("nombre", name + "%");
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> terminaEnNombre(String name) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso " +
+//                                    "WHERE a.nombre " +
+//                                    "LIKE :nombre", Alumno.class);
+//
+//            query.setParameter("nombre", "%" + name);
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> coincidenciaExactaDni(String dnii) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso " +
+//                                    "WHERE a.DNI = :DNI", Alumno.class);
+//
+//            query.setParameter("DNI", dnii);
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> contienePalabraClaveDni(String dnii) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso " +
+//                                    "WHERE a.DNI " +
+//                                    "LIKE :DNI", Alumno.class);
+//
+//            query.setParameter("DNI", "%" + dnii + "%");
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> empiezaPorDni(String dnii) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso " +
+//                                    "WHERE a.DNI " +
+//                                    "LIKE :DNI", Alumno.class);
+//
+//            query.setParameter("DNI", dnii + "%");
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> terminaEnDni(String dnii) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso " +
+//                                    "WHERE a.DNI " +
+//                                    "LIKE :DNI", Alumno.class);
+//
+//            query.setParameter("DNI", "%" + dnii);
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+//    @Override
+//    public List<Alumno> notaMediaAlum(Double mediia) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso", Alumno.class);
+//
+//            List<Alumno> alumnos = query.getResultList();
+//
+//            List<Alumno> result = new ArrayList<>();
+//
+//            for (Alumno a : alumnos) {
+//                double sumaNotas =
+//                        a.getListaNotas()
+//                                .stream()
+//                                .mapToDouble(Double::doubleValue)
+//                                .sum();
+//
+//                double media = sumaNotas / a.getListaNotas().size();
+//
+//                if (media == mediia) {
+//                    result.add(a);
+//                }
+//            }
+//
+//            return result;
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+//
+////    @Override
+////    public List<Alumno> profesorTutorAlum(String nombreTutor) {
+////        entityManager = ControladorJPA.getEntityManager();
+////
+////        try {
+////            TypedQuery<Alumno> query =
+////                    entityManager.createQuery(
+////                            "SELECT a " +
+////                                    "FROM Alumno a " +
+////                                    "LEFT JOIN FETCH a.curso c " +
+////                                    "LEFT JOIN c.listaProfesor p " +
+////                                    "WHERE p.nombre = :nombreTutor", Alumno.class);
+////
+////            query.setParameter("nombreTutor", nombreTutor);
+////
+////            for (Alumno alumno : query.getResultList()) {
+////                Hibernate.initialize(alumno.getListaNotas());
+////            }
+////
+////            return query.getResultList();
+////        } catch (Exception e) {
+////            throw new RuntimeException(e);
+////        } finally {
+////            entityManager.close();
+////        }
+////    }
+//
+//    @Override
+//    public List<Alumno> buscarCursoAlum(List<String> listaCur) {
+//        entityManager = ControladorJPA.getEntityManager();
+//
+//        try {
+//            TypedQuery<Alumno> query =
+//                    entityManager.createQuery(
+//                            "SELECT a " +
+//                                    "FROM Alumno a " +
+//                                    "LEFT JOIN FETCH a.curso c " +
+//                                    "WHERE c.nombre IN :listaCur", Alumno.class);
+//
+//            query.setParameter("listaCur", listaCur);
+//
+//            for (Alumno alumno : query.getResultList()) {
+//                Hibernate.initialize(alumno.getListaNotas());
+//            }
+//
+//            return query.getResultList();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
 
 }
