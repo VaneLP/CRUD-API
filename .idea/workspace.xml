@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="45f7cc47-062e-48be-aa45-df1f334101d3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/ControladorAlumnos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/ControladorAlumnos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/ControladorCursos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/ControladorCursos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/AlumnoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/AlumnoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/CursoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/CursoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/jpa/AlumnoDAOJPAImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/jpa/AlumnoDAOJPAImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/jpa/CursoDAOJPAImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/jpa/CursoDAOJPAImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="45f7cc47-062e-48be-aa45-df1f334101d3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -100,7 +92,7 @@
       <workItem from="1708771526914" duration="676000" />
       <workItem from="1708772363763" duration="4275000" />
       <workItem from="1709114942576" duration="638000" />
-      <workItem from="1709115762111" duration="1193000" />
+      <workItem from="1709115762111" duration="1679000" />
     </task>
     <servers />
   </component>
