@@ -6,6 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="45f7cc47-062e-48be-aa45-df1f334101d3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/ControladorAlumnos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/ControladorAlumnos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/ControladorCursos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/ControladorCursos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/AlumnoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/AlumnoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/CursoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/CursoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/jpa/AlumnoDAOJPAImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/jpa/AlumnoDAOJPAImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/jpa/CursoDAOJPAImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ies_thiar/controlador/dao/jpa/CursoDAOJPAImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,26 +36,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.App.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Vane/Documents/GitHub/CRUD-API",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.App.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Vane/Documents/GitHub/CRUD-API&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
@@ -94,6 +100,7 @@
       <workItem from="1708771526914" duration="676000" />
       <workItem from="1708772363763" duration="4275000" />
       <workItem from="1709114942576" duration="638000" />
+      <workItem from="1709115762111" duration="1193000" />
     </task>
     <servers />
   </component>

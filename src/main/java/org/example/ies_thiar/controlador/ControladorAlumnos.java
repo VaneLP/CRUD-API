@@ -21,21 +21,16 @@ import java.util.Optional;
 @Path
 public class ControladorAlumnos  {
 	private List<Double> listNota = new ArrayList<Double>();
-	//JDBC
-	//private AlumnoDAO alumDao= new AlumnoDAOJDBCImpl();
-
-	//JPA
 	private AlumnoDAO alumJpa = new AlumnoDAOJPAImpl();
-
 	private double allNotas = 0, media;
 	private int cont = 0;
 
-
 	// ---- METODOS ----
-//	public void crearTablas() {
-//		alumJpa.crearTablasAlum();
-//	}
-
+	/**
+	 * Agrega un alumno utilizando la informacion proporcionada en el cuerpo de la solicitud
+	 * @param body Cuerpo de la solicitud en formato JSON que contiene la informacion del alumno a agregar
+	 * @param response Respuesta HTTP que indica el resultado de la operacion
+	 */
 	@POST("/api/agregarAlumno")
 	public void agregar(@Body String body, Response response) {
 		try{
@@ -48,6 +43,13 @@ public class ControladorAlumnos  {
 		}
 
 	}
+
+	/**
+	 * Busca un alumno por su id
+	 * @param response Respuesta HTTP que contiene la informacion del alumno si se encuentra
+	 * @param id Identificador del alumno a buscar
+	 * @return El alumno encontrado o un mensaje indicando que no se encontro el alumno
+	 */
 	@GET("/api/alumno/:id")
 	public Alumno buscar(Response response, @PathParam long id) {
 		Optional<Alumno> a = Optional.ofNullable(alumJpa.readUno(id));
@@ -57,9 +59,15 @@ public class ControladorAlumnos  {
 		else
 			response.json("Alumno no encontrado");
 
-        return a.get();
-    }
+		return a.get();
+	}
 
+	/**
+	 * Actualiza la informacion de un alumno existente
+	 * @param body Cuerpo de la solicitud en formato JSON que contiene la información actualizada del alumno
+	 * @param response Respuesta HTTP que indica el resultado de la operacion
+	 * @param id Identificador del alumno a actualizar
+	 */
 	@PUT("/api/updateAlumno/:id")
 	public void update(@Body String body, Response response, @PathParam long id){
 		try{
@@ -72,12 +80,21 @@ public class ControladorAlumnos  {
 		}
 	}
 
+	/**
+	 * Elimina un alumno por su id
+	 * @param response Respuesta HTTP que indica el resultado de la operacion
+	 * @param request Solicitud HTTP que contiene el id del alumno a eliminar
+	 */
 	@DELETE("/api/eliminarAlumno/:id")
 	public void eliminar(Response response, Request request) {
 		alumJpa.delete(request.pathLong("id"));
 	}
 
-
+	/**
+	 * Lista todos los alumnos registrados
+	 * @param response Respuesta HTTP que contiene la lista de alumnos
+	 * @return La lista de alumnos registrados
+	 */
 	@GET("/api/alumnos")
 	public List<Alumno> listar(Response response) {
 		response.json(alumJpa.listaAlumDAO());
@@ -85,55 +102,4 @@ public class ControladorAlumnos  {
 		return alumJpa.listaAlumDAO();
 	}
 
-//
-//	public List<Alumno> ordenarAlfabeticamente() {
-//		return alumJpa.ordenarAlumAlfDAO();
-//	}
-//	public void agregarNotaAlumno(Alumno a, double nota) {
-//		alumJpa.insertNota(a,nota);
-//	}
-//	public void agregarNotaAlumno(String dni, double nota) {
-//		alumJpa.insertNota(dni,nota);
-//	}
-//	public List<Alumno> listarAprobados() {
-//		return alumJpa.listaAlumAproDAO();
-//	}
-//	public List<Alumno> listarSuspensos() {
-//		return alumJpa.listaAlumSusDAO();
-//	}
-//	public List<Alumno> coincidenciaExactaNombre(String name){
-//		return alumJpa.coincidenciaExactaNombre(name);
-//	}
-//	public List<Alumno> contienePalabraClaveNombre(String name){
-//		return alumJpa.contienePalabraClaveNombre(name);
-//	}
-//	public List<Alumno> empiezaPorNombre(String name){
-//		return alumJpa.empiezaPorNombre(name);
-//	}
-//	public List<Alumno> terminaEnNombre(String name){
-//		return alumJpa.terminaEnNombre(name);
-//	}
-//
-//	public List<Alumno> coincidenciaExactaDni(String dni){
-//		return alumJpa.coincidenciaExactaDni(dni);
-//	}
-//	public List<Alumno> contienePalabraClaveDni(String dni){
-//		return alumJpa.contienePalabraClaveDni(dni);
-//	}
-//	public List<Alumno> empiezaPorDni(String dni){
-//		return alumJpa.empiezaPorDni(dni);
-//	}
-//	public List<Alumno> terminaEnDni(String dni){
-//		return alumJpa.terminaEnDni(dni);
-//	}
-//	public List<Alumno> notaMediaAlum(Double mediia){
-//		return alumJpa.notaMediaAlum(mediia);
-//	}
-////	public List<Alumno> profesorTutorAlum(String nombreTutor){
-////		return alumJpa.profesorTutorAlum(nombreTutor);
-////	}
-//
-//	public List<Alumno> buscarCursoAlum(List<String> listaCur){
-//		return alumJpa.buscarCursoAlum(listaCur);
-//	}
 }

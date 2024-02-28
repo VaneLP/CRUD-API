@@ -19,16 +19,14 @@ import java.util.Optional;
 
 @Path
 public class ControladorCursos{
-    //private CursoDAO curDao = new CursoDAOJDBCImpl();
     private CursoDAO curJpa = new CursoDAOJPAImpl();
 
     // ---- METODOS ----
-
-    
-//    public void crearTablas() {
-//        curJpa.crearTablasCur();
-//    }
-
+    /**
+     * Agrega un curso utilizando la informacion proporcionada en el cuerpo de la solicitud
+     * @param body Cuerpo de la solicitud en formato JSON que contiene la información del curso a agregar
+     * @param response Respuesta HTTP que indica el resultado de la operacion
+     */
     @POST("/api/agregarCurso")
     public void agregar(@Body String body, Response response) {
         try{
@@ -41,18 +39,12 @@ public class ControladorCursos{
         }
     }
 
-
-//    public void agregarCsv(long id, String nombre) {
-//        //BBDD
-//        curJpa.insert(new Curso(id, nombre));
-//    }
-
     /**
-     * Metodo buscar de la interfaz ILista
-     * @param id pasamos una cadena de texto, que haria referencia al codigo
-     * @return nos duvuelve un curso si corresponde con el codigo
+     * Busca un curso por su id
+     * @param response Respuesta HTTP que contiene la informacion del curso si se encuentra
+     * @param id Identificador del curso a buscar
+     * @return El curso encontrado o un mensaje indicando que no se encontró el curso
      */
-
     @GET("/api/curso/:id")
     public Curso buscar(Response response, @PathParam long id) {
         Optional<Curso> c = Optional.ofNullable(curJpa.readUno(id));
@@ -65,6 +57,12 @@ public class ControladorCursos{
         return c.get();
     }
 
+    /**
+     * Actualiza la información de un curso existente
+     * @param body Cuerpo de la solicitud en formato JSON que contiene la informacion actualizada del curso
+     * @param response Respuesta HTTP que indica el resultado de la operacion
+     * @param id Identificador del curso a actualizar
+     */
     @PUT("/api/updateCurso/:id")
     public void update(@Body String body, Response response, @PathParam long id){
         try{
@@ -77,15 +75,20 @@ public class ControladorCursos{
         }
     }
 
+    /**
+     * Elimina un curso por su id
+     * @param response Respuesta HTTP que indica el resultado de la operacion
+     * @param request Solicitud HTTP que contiene el identificador del curso a eliminar
+     */
     @DELETE("/api/eliminarCurso/:id")
     public void eliminar(Response response, Request request) {
         curJpa.delete(request.pathLong("id"));
     }
 
     /**
-     * Metodo listar de la interfaz ILista
-     *
-     * @return nos duvuelve todos los cursos que tenemos en la lista
+     * Lista todos los cursos registrados
+     * @param response Respuesta HTTP que contiene la lista de cursos
+     * @return La lista de cursos registrados
      */
     @GET("/api/cursos")
     public List<Curso> listar(Response response) {
@@ -93,37 +96,4 @@ public class ControladorCursos{
 
         return curJpa.listaCurDAO();
     }
-
-
-//
-//    public List<Curso> ordenarALfabeticamente() {
-//        //BBDD
-//        return curJpa.ordenarCurAlfDAO();
-//    }
-//
-//    public List<Curso> coincidenciaExactaId(int idd){
-//        return curJpa.coincidenciaExactaId(idd);
-//    }
-//    public List<Curso> contienePalabraClaveId(int idd){
-//        return curJpa.contienePalabraClaveId(idd);
-//    }
-//    public List<Curso> empiezaPorId(int idd){
-//        return curJpa.empiezaPorId(idd);
-//    }
-//    public List<Curso> terminaEnId(int idd){
-//        return curJpa.terminaEnId(idd);
-//    }
-//    public List<Curso> coincidenciaExactaNombre(String name){
-//        return curJpa.coincidenciaExactaNombre(name);
-//    }
-//    public List<Curso> contienePalabraClaveNombre(String name){
-//        return curJpa.contienePalabraClaveNombre(name);
-//    }
-//    public List<Curso> empiezaPorNombre(String name){
-//        return curJpa.empiezaPorNombre(name);
-//    }
-//    public List<Curso> terminaEnNombre(String name){
-//        return curJpa.terminaEnNombre(name);
-//    }
-
 }
