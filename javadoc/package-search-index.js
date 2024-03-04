@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.example"},{"l":"org.example.ies_thiar.controlador"},{"l":"org.example.ies_thiar.controlador.dao"},{"l":"org.example.ies_thiar.controlador.dao.jpa"},{"l":"org.example.ies_thiar.modelo"}];updateSearchResults();
