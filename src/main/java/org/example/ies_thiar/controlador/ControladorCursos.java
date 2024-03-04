@@ -27,7 +27,7 @@ public class ControladorCursos{
      * @param body Cuerpo de la solicitud en formato JSON que contiene la información del curso a agregar
      * @param response Respuesta HTTP que indica el resultado de la operacion
      */
-    @POST("/api/agregarCurso")
+    @POST("/api/curso")
     public void agregar(@Body String body, Response response) {
         try{
             Curso c = new Gson().fromJson(body, new TypeToken<Curso>() {}.getType());
@@ -63,7 +63,7 @@ public class ControladorCursos{
      * @param response Respuesta HTTP que indica el resultado de la operacion
      * @param id Identificador del curso a actualizar
      */
-    @PUT("/api/updateCurso/:id")
+    @PUT("/api/curso/:id")
     public void update(@Body String body, Response response, @PathParam long id){
         try{
             Curso c = new Gson().fromJson(body, new TypeToken<Curso>() {}.getType());
@@ -80,7 +80,7 @@ public class ControladorCursos{
      * @param response Respuesta HTTP que indica el resultado de la operacion
      * @param request Solicitud HTTP que contiene el identificador del curso a eliminar
      */
-    @DELETE("/api/eliminarCurso/:id")
+    @DELETE("/api/curso/:id")
     public void eliminar(Response response, Request request) {
         curJpa.delete(request.pathLong("id"));
     }

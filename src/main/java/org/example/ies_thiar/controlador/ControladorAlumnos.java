@@ -31,7 +31,7 @@ public class ControladorAlumnos  {
 	 * @param body Cuerpo de la solicitud en formato JSON que contiene la informacion del alumno a agregar
 	 * @param response Respuesta HTTP que indica el resultado de la operacion
 	 */
-	@POST("/api/agregarAlumno")
+	@POST("/api/alumno")
 	public void agregar(@Body String body, Response response) {
 		try{
 			Alumno a = new Gson().fromJson(body, new TypeToken<Alumno>() {}.getType());
@@ -68,7 +68,7 @@ public class ControladorAlumnos  {
 	 * @param response Respuesta HTTP que indica el resultado de la operacion
 	 * @param id Identificador del alumno a actualizar
 	 */
-	@PUT("/api/updateAlumno/:id")
+	@PUT("/api/alumno/:id")
 	public void update(@Body String body, Response response, @PathParam long id){
 		try{
 			Alumno a = new Gson().fromJson(body, new TypeToken<Alumno>() {}.getType());
@@ -85,7 +85,7 @@ public class ControladorAlumnos  {
 	 * @param response Respuesta HTTP que indica el resultado de la operacion
 	 * @param request Solicitud HTTP que contiene el id del alumno a eliminar
 	 */
-	@DELETE("/api/eliminarAlumno/:id")
+	@DELETE("/api/alumno/:id")
 	public void eliminar(Response response, Request request) {
 		alumJpa.delete(request.pathLong("id"));
 	}
